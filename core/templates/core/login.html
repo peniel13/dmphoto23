@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-center items-start min-h-screen bg-gray-100 pt-10">  <!-- Ajout d'une marge supérieure -->
+    <form action="" method='POST' class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        {% csrf_token %}
+        <h4 class="text-xl font-semibold text-center mb-6">Bienvenue de retour !</h4>
+
+        <div class="mb-4">
+            <label for="email" class="block text-gray-700">Email</label>
+            <input type="email" name="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" id="email" placeholder="name@example.com" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="password" class="block text-gray-700">Mot de passe</label>
+            <input type="password" name="password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" id="password" placeholder="Entrez votre mot de passe" required>
+        </div>
+
+        <button class="bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 w-full mt-4">Se connecter à votre compte</button>
+        
+        <p class="mt-4 text-center">Vous n'avez pas de compte ? <a href="{% url 'signup' %}" class="text-blue-500 hover:underline">Inscrivez-vous</a></p>
+    </form>
+</div>
+{% endblock content %}

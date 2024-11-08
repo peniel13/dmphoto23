@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<section class="relative section-padding bg-fixed" style="background-image: url('{% static 'img/banner/6.jpg' %}');">
+    <div class="container mx-auto px-4 py-16">
+        <div class="flex">
+            <div class="md:w-1/2 text-left caption">
+                <h1 class="text-4xl font-bold text-white">Contact</h1>
+                <hr class="border-t-2 border-white my-4">
+                <p class="text-gray-300">
+                    Pour nous contacter par écrit, vous pouvez soit utiliser le formulaire en bas de page, soit nous écrire par email. Soyez précis dans 
+                    votre message pour que nous puissions vous répondre au mieux. Nous nous réjouissons de vous rencontrer !
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% comment %} <div class="container mx-auto p-6">
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold">Bienvenue sur la page Contactez-nous</h1>
+        <p class="text-gray-600">Vous pouvez remplir le formulaire ci-dessous pour nous contacter.</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-start space-y-6 md:space-y-0 md:space-x-6">
+        <div class="md:w-1/2 mb-6 md:mb-0">
+            <img src="{% static 'img/kinpr.jpg' %}" alt="Contact Image" class="w-full rounded-lg shadow-lg">
+        </div>
+
+        <div class="md:w-1/2 p-6 bg-white rounded-lg shadow-md">
+            <h2 class="text-2xl font-semibold mb-4">Contactez nous </h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <input type="text" name="name" class="contact-field w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500" placeholder="Your Name" required>
+                </div>
+                <div class="mb-4">
+                    <input type="email" name="email" class="contact-field w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500" placeholder="Your Email" required>
+                </div>
+                <div class="mb-4">
+                    <input type="text" name="number" class="contact-field w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500" placeholder="Phone" required>
+                </div>
+                <div class="mb-4">
+                    <textarea name="content" placeholder="Message" class="contact-field w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500 h-32" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="mt-8">
+        <h2 class="text-2xl font-semibold text-center mb-4">Contact Info</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="font-bold">Adresse</h3>
+                <p>123 Rue Exemple, Ville, Pays</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="font-bold">Téléphone</h3>
+                <p>+123 456 7890</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="font-bold">Email</h3>
+                <p>contact@example.com</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <h3 class="font-bold">Réseaux Sociaux</h3>
+                <div class="space-x-2">
+                    <a href="#" class="text-blue-600">Facebook</a>
+                    <a href="#" class="text-blue-600">Twitter</a>
+                    <a href="#" class="text-blue-600">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> {% endcomment %}
+
+
+<!-- Contact -->
+<section class="bg-white section-padding relative" style="background-image: url('{% static 'img/banner/6.jpg' %}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-30"></div> <!-- Optional dark overlay -->
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="flex flex-col md:flex-row mb-32">
+            <div class="md:w-1/2 mb-8 animate-box" data-animate-effect="fadeInUp">
+                <h5 class="text-xl font-semibold text-white">Information</h5>
+                <p class="mb-8 text-gray-200">Voici nos contacts qui sont 7/7 opérationnels pour répondre à vos besoins.</p>
+
+                <div class="flex items-center mb-4">
+                    <div class="mr-4">
+                        <img src="{% static 'img/icons/c1.svg' %}" alt="" class="w-8 h-8">
+                    </div>
+                    <div>
+                        <div class="font-semibold text-white">Appelez-nous</div>
+                        <div class="text-gray-200"><a href="tel:41794621605" class="text-blue-400 hover:underline">+ 41 79 462 16 05</a></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <img src="{% static 'img/icons/c2.svg' %}" alt="" class="w-8 h-8">
+                    </div>
+                    <div>
+                        <div class="font-semibold text-white">Envoyer un email</div>
+                        <div class="text-gray-200"><a href="mailto:info@dmphoto.ch" class="text-blue-400 hover:underline">info@dmphoto.ch</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 md:ml-8 animate-box" data-animate-effect="fadeInUp">
+                <div class="form-box p-6 border rounded-lg shadow bg-white">
+                    <h5 class="text-xl font-semibold mb-4">Contacter nous</h5>
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="98566e49-8c9c-41d3-8472-2549b3cb0e2d">
+                        
+                        <div class="mb-4">
+                            <input name="name" type="text" required placeholder="Votre Nom *" class="w-full p-2 border rounded" />
+                        </div>
+                        <div class="flex mb-4">
+                            <div class="w-1/2 pr-2">
+                                <input name="email" type="email" required placeholder="Votre Email *" class="w-full p-2 border rounded" />
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <input name="phone" type="text" required placeholder="Votre Numéro *" class="w-full p-2 border rounded" />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <input name="subject" type="text" required placeholder="Entrer le Service recherché" class="w-full p-2 border rounded" />
+                        </div>
+                        <div class="mb-4">
+                            <textarea name="msg" required placeholder="Déterminer votre commande *" class="w-full p-2 border rounded"></textarea>
+                        </div>
+                        <div>
+                            <input name="submit" type="submit" value="Envoyer maintenant" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 cursor-pointer" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

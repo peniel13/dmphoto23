@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative bg-cover bg-center h-96" style="background-image: url('{% static 'img/culinaire/mariage.jpg' %}');">
+    <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+    <div class="container mx-auto h-full flex items-center justify-start relative z-10">
+        <div class="text-left text-white">
+            <h1 class="text-4xl font-bold">Photographie de Mariage</h1>
+            <hr class="border-2 border-white my-2">
+            <p>Besoin de créer l'appétit d'un seul coup d'œil pour vos recettes ou plats culinaires ? Nous sommes la photographie qu'il vous faut.</p>
+        </div>
+    </div>
+</section>
+
+<div class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-4">Photographie de Mariage</h1>
+    <p class="mb-8 text-gray-700">
+        Découvrez notre service de photographie de mariage. Nous capturons les moments les plus précieux de votre journée spéciale avec une attention aux détails et une sensibilité artistique. 
+        Que vous soyez à Genève ou ailleurs, chaque image est prise pour durer dans le temps.
+    </p>
+    
+
+    <h2 class="text-3xl font-bold mb-6">Galerie de Mariage</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+        {% for blog in blogs %}
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="openModal({{ forloop.counter0 }})">
+                {% if blog.image %}
+                    <img src="{{ blog.image.url }}" alt="Photographie de mariage" class="w-full h-48 object-cover">
+                {% else %}
+                    <img src="{% static 'img/default-image.jpg' %}" alt="Image par défaut" class="w-full h-48 object-cover">
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modale d'image -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden" onclick="closeModal()">
+    <div class="relative">
+        <img id="modalImage" src="" alt="Image agrandie" class="max-w-full max-h-screen rounded-lg">
+        <button class="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-lg" onclick="closeModal()">×</button>
+        <button id="prevButton" class="absolute left-0 bottom-0 bg-blue-500 text-white px-4 py-2 rounded-lg hidden">Précédent</button>
+        <button id="nextButton" class="absolute right-0 bottom-0 bg-blue-500 text-white px-4 py-2 rounded-lg hidden">Suivant</button>
+    </div>
+</div>
+
+<script>
+    const images = [
+        {% for blog in blogs %}
+            "{% if blog.image %}{{ blog.image.url }}{% else %}{% static 'img/default-image.jpg' %}{% endif %}",
+        {% endfor %}
+    ];
+    let currentIndex = 0;
+
+    // Fonction pour ouvrir la modale
+    function openModal(index) {
+        currentIndex = index;
+        document.getElementById('modalImage').src = images[currentIndex];
+        document.getElementById('modal').classList.remove('hidden');
+        updateButtons();
+    }
+
+    // Fonction pour fermer la modale
+    function closeModal() {
+        document.getElementById('modal').classList.add('hidden');
+    }
+
+    // Mettre à jour les boutons "précédent" et "suivant" dans la modale
+    function updateButtons() {
+        document.getElementById('prevButton').classList.toggle('hidden', currentIndex === 0);
+        document.getElementById('nextButton').classList.toggle('hidden', currentIndex === images.length - 1);
+    }
+
+    // Navigation vers l'image précédente
+    document.getElementById('prevButton').onclick = function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            document.getElementById('modalImage').src = images[currentIndex];
+            updateButtons();
+        }
+    };
+
+    // Navigation vers l'image suivante
+    document.getElementById('nextButton').onclick = function() {
+        if (currentIndex < images.length - 1) {
+            currentIndex++;
+            document.getElementById('modalImage').src = images[currentIndex];
+            updateButtons();
+        }
+    };
+</script>
+
+{% endblock %}

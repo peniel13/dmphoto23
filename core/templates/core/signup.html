@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex justify-center items-start min-h-screen bg-gray-100 pt-10">
+    <form action="" method="POST" class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+        {% csrf_token %}
+
+        <h4 class="text-lg font-semibold mb-6 text-center">Créer un compte</h4>
+
+        {% for field in form %}
+            <div class="mb-4">
+                {{ field.label_tag }}
+                <div>
+                    {% if field.errors %}
+                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" class="border border-red-500 rounded w-full p-2" placeholder="{{ field.label }}" value="{{ field.value|default_if_none:'' }}">
+                        <small class="text-red-500">{{ field.errors }}</small>
+                    {% else %}
+                        {{ field }}  <!-- Champ sans erreurs -->
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+
+        <button class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full">Créer un compte</button>
+        
+        <p class="mt-4 text-center">Vous avez déjà un compte ? <a href="{% url 'signin' %}" class="text-blue-500 hover:underline">Connectez-vous</a></p>
+    </form>
+</div>
+{% endblock content %}

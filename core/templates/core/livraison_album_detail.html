@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ album.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .modal-content {
+            max-height: 80%;
+            max-width: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .image-container {
+            transition: transform 0.2s;
+        }
+        .image-container:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Album Section -->
+    <div class="max-w-7xl mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-2">Album: {{ album.title }}</h1>
+        <a href="{% url 'add_photos' album.id %}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Ajouter une photo</a>
+        <a href="{% url 'download_album' album.id %}" class="bg-green-500 text-white px-4 py-2 rounded mb-4 inline-block">Télécharger tout l'album</a>
+        
+        <h2 class="text-2xl font-semibold mt-4">Photos</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
+            {% for photo in album.photos.all %}
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden image-container">
+                    <img class="w-full h-48 object-cover cursor-pointer" src="{{ photo.image.url }}" alt="Photo"
+                         onclick="openModal('{{ photo.image.url }}')">
+                    <div class="p-4 flex flex-col space-y-2">
+                        <div class="flex justify-between">
+                            <button class="bg-blue-500 text-white px-2 py-1 rounded mr-2" onclick="downloadImage('{{ photo.id }}')">Télécharger</button>
+                            <form action="{% url 'delete_photo' photo.id %}" method="POST" class="mb-0" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette photo ?');">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Aucune photo trouvée dans cet album.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form action="{% url 'delete_album' album.id %}" method="POST" class="mb-4" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet album ?');">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Supprimer cet album</button>
+    </form>
+
+    <!-- Modal for Image View -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="flex justify-between w-full mt-4 px-4">
+            <button class="bg-gray-500 text-white px-4 py-2" onclick="prevImage()">Précédent</button>
+            <button class="bg-gray-500 text-white px-4 py-2" onclick="nextImage()">Suivant</button>
+        </div>
+    </div>
+
+    <script>
+        let currentImageIndex = 0;
+        const photos = [
+            {% for photo in album.photos.all %}
+            { url: '{{ photo.image.url }}', id: '{{ photo.id }}' },
+            {% endfor %}
+        ];
+
+        function openModal(imageUrl) {
+            document.getElementById('imageModal').style.display = 'flex';
+            document.getElementById('modalImage').src = imageUrl;
+            currentImageIndex = photos.findIndex(photo => photo.url === imageUrl);
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function downloadImage(id) {
+            const a = document.createElement('a');
+            a.href = `/path/to/download/${id}`; // Mettez à jour avec l'URL de téléchargement réelle
+            a.download = id; // Utilisez une logique appropriée pour le nom de fichier
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : photos.length - 1;
+            document.getElementById('modalImage').src = photos[currentImageIndex].url;
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex < photos.length - 1) ? currentImageIndex + 1 : 0;
+            document.getElementById('modalImage').src = photos[currentImageIndex].url;
+        }
+    </script>
+</body>
+</html>
+{% endblock content %}

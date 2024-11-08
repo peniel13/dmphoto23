@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+
+    <!-- Hero Section -->
+    <header class="relative bg-gradient-to-r from-gray-900 to-gray-700 h-screen flex items-center" style="background-image: url('{% static "img/dm/Geneve.jpg" %}'); background-size: cover;">
+        <div class="absolute inset-0 opacity-50 bg-black"></div>
+        <div class="relative z-10 max-w-4xl mx-auto text-center text-white">
+            <h1 class="text-5xl font-bold mb-4">Bienvenue sur DM PHOTO</h1>
+            <p class="text-lg mb-6"> Histoire d'être vue.</p>
+            <p class="text-lg mb-6">Place de Livraison et stockage de vos photos en toute sécurité.</p>
+            <p class="text-md">Photographe professionnel basé à Genève, la photographie c'est une histoire d'être vue.</p>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section class="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8 flex flex-col md:flex-row items-center">
+        <div class="flex-1 mb-4 md:mb-0 md:mr-4">
+            <h2 class="text-2xl font-semibold mb-4">À propos de DM PHOTO</h2>
+            <p class="text-gray-700">
+                Depuis 20 ans nous avons mêlé hautes compétences photographiques et technologie afin de repenser, améliorer et innover dans
+                        le domaine de la photographie.
+                        Notre équipe de photographes et vidéastes, de retoucheurs, maquilleurs et coiffeurs, est à votre disposition pour réaliser les
+                        images dont vous avez besoin. Séance photo en studio ou en extérieur.
+                        La dernière innovation en date étant notre technologie « Softskin » qui permet d’obtenir des retouches poussées sur vos photos
+                        en un temps record et à un prix défiant toute concurrence.
+                        Toutes nos photos sont vérifiées et retouchées par notre équipe dédiée en interne afin de garantir une parfaite homogénéité dans le 
+                        traitement de vos images. Nous nous engageons à livrer vos contenus le plus rapidement possible.</p>
+
+            </p>
+        </div>
+        <div class="flex-shrink-0 w-full md:w-1/3">
+            <img src="{% static 'img/dm/Dany_Malu_00002.jpg' %}" alt="À propos de Dmphotostore" class="rounded-lg shadow-lg h-full object-cover">
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="max-w-7xl mx-auto p-6 bg-gray-200 mt-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-center mb-6">Les expertises de nos photographes professionnels</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-lg p-4 shadow">
+                <img src="{% static 'img/icons/icon-1.svg' %}" alt="Photographie" class="w-16 h-16 mx-auto mb-2">
+                <h5 class="font-semibold text-lg">Photographie</h5>
+                <p>Photographie de portrait, séance de shooting et plein d'autres.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 shadow">
+                <img src="{% static 'img/icons/icon-2.svg' %}" alt="Vidéo" class="w-16 h-16 mx-auto mb-2">
+                <h5 class="font-semibold text-lg">Vidéo</h5>
+                <p>Vidéo, nous avons : la séance prise de vue, tournage de vidéo clip, pub, etc.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 shadow">
+                <img src="{% static 'img/icons/icon-3.svg' %}" alt="Photo Rétouche" class="w-16 h-16 mx-auto mb-2">
+                <h5 class="font-semibold text-lg">Photo Rétouche</h5>
+                <p>Équipe de traitement de photo de haute qualité.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 shadow">
+                <img src="{% static 'img/icons/icon-4.svg' %}" alt="Vidéo 4K" class="w-16 h-16 mx-auto mb-2">
+                <h5 class="font-semibold text-lg">Vidéo 4K Stabilisée / Drone</h5>
+                <p>Des outils incontournables pour sublimer vos projets.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 shadow">
+                <img src="{% static 'img/icons/icon-5.svg' %}" alt="Home-Staging" class="w-16 h-16 mx-auto mb-2">
+                <h5 class="font-semibold text-lg">Home-Staging 3D RHINOV</h5>
+                <p>L’aménagement virtuel pour aider vos clients à se projeter.</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 shadow">
+                <img src="{% static 'img/icons/icon-6.svg' %}" alt="Visite Virtuelle" class="w-16 h-16 mx-auto mb-2">
+                <h5 class="font-semibold text-lg">Visite Virtuelle MATTERPORT</h5>
+                <p>Une technologie 3D pour mettre en avant tous vos espaces.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 bg-gray-100">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-8">Photographie et Vidéo services</h2>
+            <p class="mb-12 text-gray-700">Découvrez nos services de photographie à travers différentes catégories.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <a href="/mariage" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/culinaire/mariage.jpg' %}" alt="Photographie de mariage" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Mariage</span>
+                    </div>
+                </a>
+                <a href="/corporate" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/corporate/Corporate_00008.jpg' %}" alt="Photographie corporate" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Corporate</span>
+                    </div>
+                </a>
+                <a href="/conference" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/conference/conf01.jpg' %}" alt="Photographie de conférence" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Conférence</span>
+                    </div>
+                </a>
+                <a href="/photo" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/4.jpg' %}" alt="Photographie immobilière" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Immobilier</span>
+                    </div>
+                </a>
+                <a href="/famille" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/fami.jpg' %}" alt="Photographie de famille" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Famille</span>
+                    </div>
+                </a>
+                <a href="/evenement" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/conf10.jpg' %}" alt="Photographie d'événements" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Événements</span>
+                    </div>
+                </a>
+                <a href="/culinaire" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/culinaire/assiette.jpg' %}" alt="Photographie culinaire" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Culinaire</span>
+                    </div>
+                </a>
+                <a href="/video" class="relative overflow-hidden rounded-lg shadow-lg">
+                    <img src="{% static 'img/Drone_00004.jpg' %}" alt="Vidéo" class="w-full h-48 object-cover">
+                    <div class="absolute inset-0 bg-black opacity-50 flex items-center justify-center">
+                        <span class="text-white text-xl font-semibold">Vidéo</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    {% comment %} blog {% endcomment %}
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold mb-8 text-center">Section blog</h1>
+
+        <h2 class="text-2xl font-bold mb-4">Derniers Articles de Blog</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+            {% for blog in blogs %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-200 hover:scale-105">
+                <img src="{{ blog.thumbnail.url }}" alt="{{ blog.title }}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold">{{ blog.title }}</h2>
+                    <p class="text-gray-700 mt-2">{{ blog.body|truncatewords:15 }}</p>
+                    <a href="{% url 'blog_detail' blog.slug %}" class="text-indigo-600 mt-4 inline-block">Lire plus</a>
+                </div>
+            </div>
+            {% empty %}
+            <p class="col-span-3 text-gray-500 text-center">Aucun article de blog disponible.</p>
+            {% endfor %}
+        </div>
+        <div class="text-center mb-8">
+            <a href="{% url 'blog_list' %}" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-200">Voir tous les articles</a>
+        </div>
+    </div>
+<!-- Section Témoignages -->
+<h2 class="text-2xl font-bold mb-4 text-center">Témoignages de nos clients</h2>
+<div class="relative">
+    
+    <div class="flex overflow-x-auto space-x-4 py-4 mx-auto max-w-full">
+        {% for testimonial in testimonials %}
+        <div class="flex-none w-64 bg-white rounded-lg shadow-md p-4">
+            <div class="flex items-center mb-4">
+                {% if testimonial.user.profile_pic %}
+                    <img src="{{ testimonial.user.profile_pic.url }}" alt="{{ testimonial.user.first_name }} {{ testimonial.user.last_name }}" class="w-12 h-12 rounded-full mr-2">
+                {% else %}
+                    <img class="h-12 w-12 rounded-full mr-2" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Default Profile Picture">
+                {% endif %}
+                <div>
+                    <p class="font-semibold">{{ testimonial.user.first_name }} {{ testimonial.user.last_name }}</p>
+                    <p class="text-gray-500 text-sm">Témoignage</p>
+                </div>
+            </div>
+            <p class="text-gray-700">{{ testimonial.content }}</p>
+        </div>
+        {% empty %}
+            <p class="text-gray-500">Aucun témoignage disponible.</p>
+        {% endfor %}
+    </div>
+    
+
+    <!-- Flèches de navigation -->
+    <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-500 transition duration-200">
+        &lt;
+    </button>
+    <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-500 transition duration-200">
+        &gt;
+    </button>
+</div>
+
+
+<section class="bg-white section-padding relative" style="background-image: url('{% static 'img/banner/6.jpg' %}'); background-size: cover; background-position: center;">
+    <div class="absolute inset-0 bg-black opacity-30"></div> <!-- Optional dark overlay -->
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="flex flex-col md:flex-row mb-32">
+            <div class="md:w-1/2 mb-8 animate-box" data-animate-effect="fadeInUp">
+                <h5 class="text-xl font-semibold text-white">Information</h5>
+                <p class="mb-8 text-gray-200">Voici nos contacts qui sont 7/7 opérationnels pour répondre à vos besoins.</p>
+
+                <div class="flex items-center mb-4">
+                    <div class="mr-4">
+                        <img src="{% static 'img/icons/c1.svg' %}" alt="" class="w-8 h-8">
+                    </div>
+                    <div>
+                        <div class="font-semibold text-white">Appelez-nous</div>
+                        <div class="text-gray-200"><a href="tel:41794621605" class="text-blue-400 hover:underline">+ 41 79 462 16 05</a></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <img src="{% static 'img/icons/c2.svg' %}" alt="" class="w-8 h-8">
+                    </div>
+                    <div>
+                        <div class="font-semibold text-white">Envoyer un email</div>
+                        <div class="text-gray-200"><a href="mailto:info@dmphoto.ch" class="text-blue-400 hover:underline">info@dmphoto.ch</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:w-1/2 md:ml-8 animate-box" data-animate-effect="fadeInUp">
+                <div class="form-box p-6 border rounded-lg shadow bg-white">
+                    <h5 class="text-xl font-semibold mb-4">Contacter nous</h5>
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="98566e49-8c9c-41d3-8472-2549b3cb0e2d">
+                        
+                        <div class="mb-4">
+                            <input name="name" type="text" required placeholder="Votre Nom *" class="w-full p-2 border rounded" />
+                        </div>
+                        <div class="flex mb-4">
+                            <div class="w-1/2 pr-2">
+                                <input name="email" type="email" required placeholder="Votre Email *" class="w-full p-2 border rounded" />
+                            </div>
+                            <div class="w-1/2 pl-2">
+                                <input name="phone" type="text" required placeholder="Votre Numéro *" class="w-full p-2 border rounded" />
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <input name="subject" type="text" required placeholder="Entrer le Service recherché" class="w-full p-2 border rounded" />
+                        </div>
+                        <div class="mb-4">
+                            <textarea name="msg" required placeholder="Déterminer votre commande *" class="w-full p-2 border rounded"></textarea>
+                        </div>
+                        <div>
+                            <input name="submit" type="submit" value="Envoyer maintenant" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 cursor-pointer" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <!-- Contact Form Section -->
+{% comment %} <div class="mt-10 text-center">
+    <h2 class="text-2xl font-semibold mb-4">Contactez-nous</h2>
+    <form method="POST" class="bg-white rounded-lg shadow-md p-6 mx-auto max-w-lg">
+        {% csrf_token %}
+        <div class="mb-4">
+            <input type="text" name="name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500" placeholder="Votre Nom" required>
+        </div>
+        <div class="mb-4">
+            <input type="email" name="email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500" placeholder="Votre Email" required>
+        </div>
+        <div class="mb-4">
+            <input type="text" name="number" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500" placeholder="Téléphone" required>
+        </div>
+        <div class="mb-4">
+            <textarea name="content" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring focus:ring-indigo-500 h-32" placeholder="Message" required></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">Envoyer</button>
+    </form>
+</div> {% endcomment %}
+
+     <script>
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const testimonialsContainer = document.querySelector('.overflow-x-auto');
+    
+        prevButton.addEventListener('click', () => {
+            testimonialsContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+    
+        nextButton.addEventListener('click', () => {
+            testimonialsContainer.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+    </script>
+{% endblock content %}

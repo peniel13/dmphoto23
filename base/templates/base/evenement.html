@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="relative bg-cover bg-center h-96" style="background-image: url('{% static 'img/culinaire/evenement.jpg' %}');">
+    <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+    <div class="container mx-auto h-full flex items-center justify-start relative z-10">
+        <div class="text-left text-white">
+            <h1 class="text-4xl font-bold">Vos Événements</h1>
+            <hr class="border-2 border-white my-2">
+            <p>Besoin de créer l'appétit d'un seul coup d'œil pour vos recettes ou plats culinaires ? Nous sommes la photographie qu'il vous faut.</p>
+        </div>
+    </div>
+</section>
+
+<div class="container mx-auto p-8">
+    <h1 class="text-4xl font-bold mb-4">Vos Événements</h1>
+    <p class="mb-8 text-gray-700">
+        Découvrez nos photographies d'événements passés et laissez-vous inspirer par notre travail. Chaque moment est capturé pour créer un souvenir inoubliable.
+    </p>
+
+    <h2 class="text-3xl font-bold mb-6">Galerie de Photos d'Événements</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
+        {% for blog in blogs %}
+        <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="openModal({{ forloop.counter0 }})">
+            <!-- Afficher l'image associée au blog -->
+            {% if blog.image %}
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="w-full h-48 object-cover">
+            {% else %}
+                <img src="{% static 'img/no-image.jpg' %}" alt="Image non disponible" class="w-full h-48 object-cover">
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+<!-- Modale d'image -->
+<div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden" onclick="closeModal()">
+    <div class="relative">
+        <img id="modalImage" src="" alt="Image agrandie" class="max-w-full max-h-screen rounded-lg">
+        <button class="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-lg" onclick="closeModal()">×</button>
+        <button id="prevButton" class="absolute left-0 bottom-0 bg-blue-500 text-white px-4 py-2 rounded-lg hidden">Précédent</button>
+        <button id="nextButton" class="absolute right-0 bottom-0 bg-blue-500 text-white px-4 py-2 rounded-lg hidden">Suivant</button>
+    </div>
+</div>
+
+{% endblock %}
+
+<script>
+    // Crée un tableau des URL des images d'événements
+    const images = [
+    {% for blog in blogs %}
+    "{% if blog.image %}{{ blog.image.url }}{% else %}{% static 'img/no-image.jpg' %}{% endif %}",
+{% endfor %}
+    ];
+    let currentIndex = 0;
+
+    // Ouvre la modale avec l'image correspondante
+    function openModal(index) {
+        currentIndex = index;
+        document.getElementById('modalImage').src = images[currentIndex];
+        document.getElementById('modal').classList.remove('hidden');
+        updateButtons();
+    }
+
+    // Ferme la modale
+    function closeModal() {
+        document.getElementById('modal').classList.add('hidden');
+    }
+
+    // Met à jour l'état des boutons Précédent/Suivant en fonction de l'image actuelle
+    function updateButtons() {
+        document.getElementById('prevButton').classList.toggle('hidden', currentIndex === 0);
+        document.getElementById('nextButton').classList.toggle('hidden', currentIndex === images.length - 1);
+    }
+
+    // Fonction pour le bouton "Précédent"
+    document.getElementById('prevButton').onclick = function() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            document.getElementById('modalImage').src = images[currentIndex];
+            updateButtons();
+        }
+    };
+
+    // Fonction pour le bouton "Suivant"
+    document.getElementById('nextButton').onclick = function() {
+        if (currentIndex < images.length - 1) {
+            currentIndex++;
+            document.getElementById('modalImage').src = images[currentIndex];
+            updateButtons();
+        }
+    };
+</script>

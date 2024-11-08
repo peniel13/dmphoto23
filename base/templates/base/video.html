@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Galerie Vidéo</title>
+</head>
+<body class="bg-gray-100">
+    <section class="relative bg-cover bg-center h-96" style="background-image: url('{% static 'img/Drone_00004.jpg' %}');">
+        <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+        <div class="container mx-auto h-full flex items-center justify-start relative z-10">
+            <div class="text-left text-white">
+                <h1 class="text-4xl font-bold">Services Vidéo</h1>
+                <hr class="border-2 border-white my-2">
+                <p>Besoin de photos de qualité pour mettre en avant vos biens immobiliers ? Notre équipe de photographes professionnels est là 
+                    pour répondre à vos attentes. Notre expertise vous garantit d’avoir un photographe immobilier qui restera sur place le temps 
+                    nécessaire afin de prendre les meilleures prises de vues possibles, vous assurant un reportage photo de qualité.</p>
+            </div>
+        </div>
+    </section>
+    <!-- Section de la vidéo "featured" -->
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold mb-4"></h1>
+
+        {% if featured_video %}
+            <h2 class="text-3xl font-bold mb-6">Vidéo en Vedette</h2>
+            <div class="mb-8">
+                <video controls class="w-full h-96 rounded-lg">
+                    <source src="{{ featured_video.video.url }}" type="video/mp4">
+                    Votre navigateur ne prend pas en charge la vidéo.
+                </video>
+            </div>
+        {% else %}
+            <p class="text-center text-lg text-gray-700">Aucune vidéo en vedette actuellement.</p>
+        {% endif %}
+
+        <!-- Section de la galerie vidéo -->
+        <h2 class="text-3xl font-bold mb-6">Galerie Vidéo</h2>
+        
+        {% if videos %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                {% for video in videos %}
+                <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{{ video.video.url }}')">
+                    <img src="{{ video.thumbnail.url }}" alt="{{ video.title }}" class="w-full h-48 object-cover rounded-t-lg">
+                    <div class="p-4">
+                        <h3 class="font-semibold">{{ video.title }}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-lg text-gray-700">Aucune vidéo disponible.</p>
+        {% endif %}
+    </div>
+
+    <!-- Modale pour lecture de vidéo -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+        <div class="relative">
+            <video id="modalVideo" controls class="max-w-full max-h-screen rounded-lg">
+                <source id="videoSource" src="" type="video/mp4">
+                Votre navigateur ne prend pas en charge la vidéo.
+            </video>
+            <button class="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-lg" onclick="closeModal()">×</button>
+        </div>
+    </div>
+
+    <script>
+        function playVideo(videoPath) {
+            document.getElementById('videoSource').src = videoPath;
+            document.getElementById('modalVideo').load();
+            document.getElementById('videoModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('videoModal').classList.add('hidden');
+            document.getElementById('modalVideo').pause();
+        }
+    </script>
+
+</body>
+</html>
+{% endblock %}
+
+
+
+
+
+
+{% comment %} {% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Services Vidéo</title>
+</head>
+<body class="bg-gray-100">
+    <section class="relative bg-cover bg-center h-96" style="background-image: url('{% static 'img/drone/Drone_00004.jpg' %}');">
+        <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+        <div class="container mx-auto h-full flex items-center justify-start relative z-10">
+            <div class="text-left text-white">
+                <h1 class="text-4xl font-bold">Services Vidéo</h1>
+                <hr class="border-2 border-white my-2">
+                <p>Besoin de photos de qualité pour mettre en avant vos biens immobiliers ? Notre équipe de photographes professionnels est là 
+                    pour répondre à vos attentes. Notre expertise vous garantit d’avoir un photographe immobilier qui restera sur place le temps 
+                    nécessaire afin de prendre les meilleures prises de vues possibles, vous assurant un reportage photo de qualité.</p>
+            </div>
+        </div>
+    </section>
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold mb-4">Services de Vidéo</h1>
+        <p class="mb-8 text-gray-700">
+            Nous proposons des services de vidéo professionnels incluant le montage de clips, la réalisation de reportages, des publicités, et des podcasts. 
+            Notre équipement de pointe, incluant des drones pour des prises de vue aériennes, nous permet de capturer des images époustouflantes.
+        </p>
+        
+        <h2 class="text-3xl font-bold mb-6">Vidéo Présentative</h2>
+        <div class="mb-8">
+            <video controls class="w-full h-96 rounded-lg">
+                <source src="{% static 'img/video/video immo Cologny.mp4' %}" type="video/mp4">
+                Votre navigateur ne prend pas en charge la vidéo.
+            </video>
+        </div>
+
+        <h2 class="text-3xl font-bold mb-6">Galerie Vidéo</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+            <!-- Card 1 -->
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{% static 'img/video/video immo Cologny.mp4' %}')">
+                <img src="{% static 'img/immo/VisitesVirtuelles.jpg' %}" alt="Vidéo 1" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="font-semibold">Vidéo immobiliere </h3>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{% static 'img/video/video immo Cologny.mp4' %}')">
+                <img src="{% static 'img/mariage/Morgane_0060.jpg' %}" alt="Vidéo 2" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="font-semibold">Vidéo de Présentation 2</h3>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{% static 'img/video/video immo Cologny.mp4' %}')">
+                <img src="{% static 'img/mariage/Morgane_0060.jpg' %}" alt="Vidéo 3" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="font-semibold">Vidéo de Présentation 3</h3>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{% static 'img/video/video immo Cologny.mp4' %}')">
+                <img src="{% static 'img/mariage/Morgane_0060.jpg' %}" alt="Vidéo 4" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="font-semibold">Vidéo de Présentation 4</h3>
+                </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{% static 'img/video/video immo Cologny.mp4' %}')">
+                <img src="{% static 'img/mariage/Morgane_0060.jpg' %}" alt="Vidéo 5" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="font-semibold">Vidéo de Présentation 5</h3>
+                </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="relative overflow-hidden rounded-lg shadow-lg cursor-pointer" onclick="playVideo('{% static 'img/video/video immo Cologny.mp4' %}')">
+                <img src="{% static 'img/mariage/Morgane_0060.jpg' %}" alt="Vidéo 6" class="w-full h-48 object-cover rounded-t-lg">
+                <div class="p-4">
+                    <h3 class="font-semibold">Vidéo de mariage</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale pour lecture de vidéo -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
+        <div class="relative">
+            <video id="modalVideo" controls class="max-w-full max-h-screen rounded-lg">
+                <source id="videoSource" src="" type="video/mp4">
+                Votre navigateur ne prend pas en charge la vidéo.
+            </video>
+            <button class="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-lg" onclick="closeModal()">×</button>
+        </div>
+    </div>
+
+    <script>
+        function playVideo(videoPath) {
+            document.getElementById('videoSource').src = videoPath;
+            document.getElementById('modalVideo').load();
+            document.getElementById('videoModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('videoModal').classList.add('hidden');
+            document.getElementById('modalVideo').pause();
+        }
+    </script>
+
+</body>
+</html>
+
+{% endblock content %} {% endcomment %}

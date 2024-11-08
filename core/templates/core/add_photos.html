@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
+        <h2 class="text-2xl font-bold mb-6">Ajouter des photos à l'album : {{ album.title }}</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+                <label for="images" class="block text-gray-700 text-sm font-semibold mb-2">Ajouter des photos</label>
+                <input required name="image" type="file" multiple class="form-input border rounded-lg py-2 px-3 w-full" id="images">
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">Ajouter des photos</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

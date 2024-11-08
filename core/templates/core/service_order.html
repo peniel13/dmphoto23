@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-4">Commande de Service</h1>
+        <p class="text-gray-600 text-center mb-6">
+            Veuillez remplir le formulaire ci-dessous pour commander un service. Nous vous contacterons dès que possible.
+        </p>
+
+        {% if messages %}
+            <div class="mb-4">
+                {% for message in messages %}
+                    <div class="bg-green-100 text-green-800 p-2 rounded mb-2">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'service_order' %}" class="space-y-4">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="{{ form.nom.id_for_label }}" class="block text-gray-700">{{ form.nom.label }}</label>
+                    {{ form.nom }}
+                    {{ form.nom.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.postnom.id_for_label }}" class="block text-gray-700">{{ form.postnom.label }}</label>
+                    {{ form.postnom }}
+                    {{ form.postnom.errors }}
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-gray-700">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.telephone.id_for_label }}" class="block text-gray-700">{{ form.telephone.label }}</label>
+                    {{ form.telephone }}
+                    {{ form.telephone.errors }}
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label for="{{ form.date_commande.id_for_label }}" class="block text-gray-700">{{ form.date_commande.label }}</label>
+                    {{ form.date_commande }}
+                    {{ form.date_commande.errors }}
+                </div>
+                <div>
+                    <label for="{{ form.nombre_heures.id_for_label }}" class="block text-gray-700">{{ form.nombre_heures.label }}</label>
+                    {{ form.nombre_heures }}
+                    {{ form.nombre_heures.errors }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="{{ form.service.id_for_label }}" class="block text-gray-700">{{ form.service.label }}</label>
+                {{ form.service }}
+                {{ form.service.errors }}
+            </div>
+            <div class="mb-4">
+                <label for="{{ form.description.id_for_label }}" class="block text-gray-700">{{ form.description.label }}</label>
+                {{ form.description }}
+                {{ form.description.errors }}
+            </div>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">Valider</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

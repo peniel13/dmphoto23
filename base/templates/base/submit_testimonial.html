@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Témoignages</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto p-8 bg-white shadow-md rounded-lg">
+        <h1 class="text-2xl font-semibold text-center mb-6">Soumettre un Témoignage</h1>
+        
+        <form method="POST" action="{% url 'submit_testimonial' %}">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+                <input type="text" name="name" id="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-indigo-200" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" name="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-indigo-200" required>
+            </div>
+            <div class="mb-4">
+                <label for="content" class="block text-sm font-medium text-gray-700">Témoignage</label>
+                <textarea name="content" id="content" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-indigo-200" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded-md hover:bg-indigo-500 transition duration-200">Envoyer</button>
+        </form>
+
+        <h2 class="text-3xl font-bold text-center mt-10 mb-4">Témoignages</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {% for testimonial in testimonials %}
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm">
+                <h3 class="font-semibold text-lg">{{ testimonial.name }}</h3>
+                <p class="text-sm text-gray-500">{{ testimonial.email }}</p>
+                <p class="mt-2">{{ testimonial.content }}</p>
+                <p class="mt-2 text-gray-400 text-sm">{{ testimonial.created_at|date:"d M Y" }}</p>
+            </div>
+            {% empty %}
+            <p class="col-span-2 text-gray-500 text-center">Aucun témoignage disponible.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/forms"></script>
+</body>
+</html>

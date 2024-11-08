@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="bg-gray-100 p-6">
+    <!-- Profile Section -->
+    <div class="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                {% if user.profile_pic %}
+                    <img class="h-24 w-24 rounded-full" src="{{ user.profile_pic.url }}" alt="Profile Picture">
+                {% else %}
+                    <img class="h-24 w-24 rounded-full" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Default Profile Picture">
+                {% endif %}
+            </div>
+            <div class="ml-6">
+                <h1 class="text-2xl font-bold">{{ user.first_name }} {{ user.last_name }}</h1>
+                <p class="text-gray-600">{{ user.role }}</p>
+                <p class="text-gray-600">{{ user.email }}</p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h2 class="text-lg font-semibold">À propos</h2>
+            <p class="text-gray-700">{{ user.bio }}</p>
+        </div>
+
+        <div class="mt-4">
+            <h2 class="text-lg font-semibold">Informations de Contact</h2>
+            <p class="text-gray-700">Téléphone : {{ user.phone }}</p>
+            <p class="text-gray-700">Adresse : {{ user.address }}</p>
+        </div>
+    </div>
+
+    <!-- Buttons Section -->
+    <div class="mt-8 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <a href="{% url 'update_profile' %}" class="bg-blue-500 text-white px-4 py-2 rounded text-center">Modifier le Profil</a>
+        <button id="createAlbumButton" class="bg-blue-500 text-white px-4 py-2 rounded text-center mt-4">Créer un Album</button>
+        <button id="albumsButton" class="bg-blue-600 text-white px-4 py-2 rounded text-center">Mes Albums</button>
+        <button id="deliveryButton" class="bg-green-600 text-white px-4 py-2 rounded text-center">Ma Livraison Photo</button>
+        <button id="orderHistoryButton" class="bg-purple-500 text-white px-4 py-2 rounded text-center">Commande Historique</button>
+    </div>
+
+    <!-- Albums Section -->
+    <div id="albumsSection" class="mt-4 hidden">
+        <h2 class="text-xl font-semibold">Mes Albums</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+            {% for album in albums %}
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <img class="w-full h-48 object-cover" src="{% if album.cover_image %}{{ album.cover_image.url }}{% else %}{% static 'img/alb.png' %}{% endif %}" alt="Album Cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold">{{ album.title }}</h3>
+                        <a href="{% url 'album_detail' album.id %}" class="text-blue-600 hover:underline">Voir Détails</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Aucun album trouvé.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Order History Section -->
+    <div id="orderHistorySection" class="mt-4 hidden">
+        <h1 class="text-3xl font-bold mb-4">Historique des Commandes</h1>
+        {% if orders %}
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white shadow-md rounded-lg">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="py-2 px-4 border-b">Nom</th>
+                            <th class="py-2 px-4 border-b">Service</th>
+                            <th class="py-2 px-4 border-b">Date de Commande</th>
+                            <th class="py-2 px-4 border-b">Nombre d'Heures</th>
+                            <th class="py-2 px-4 border-b">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td class="py-2 px-4 border-b">{{ order.nom }} {{ order.postnom }}</td>
+                                <td class="py-2 px-4 border-b">{{ order.service }}</td>
+                                <td class="py-2 px-4 border-b">{{ order.date_commande }}</td>
+                                <td class="py-2 px-4 border-b">{{ order.nombre_heures }}</td>
+                                <td class="py-2 px-4 border-b">{{ order.description }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>Aucune commande trouvée.</p>
+        {% endif %}
+    </div>
+
+    <!-- Formulaire de création d'album -->
+    <div id="createAlbumForm" class="bg-gray-100 p-6 mt-4 hidden">
+        <h2 class="text-2xl font-bold text-center mb-6">Créer un Album</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="id_title" class="block text-gray-700 text-sm font-semibold mb-2">Titre de l'Album</label>
+                {{ album_form.title }}  <!-- Utilisation correcte du formulaire -->
+                {% if album_form.title.errors %}
+                    <small class="text-red-500">{{ album_form.title.errors }}</small>
+                {% endif %}
+            </div>
+            {% if album_form.non_field_errors %}
+                <div class="text-red-500 mb-4">{{ album_form.non_field_errors }}</div>
+            {% endif %}
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition">Créer</button>
+        </form>
+    </div>
+    
+    <!-- Delivery Albums Section -->
+    <div id="deliveryAlbumsSection" class="mt-4 hidden">
+        <h2 class="text-xl font-semibold">Mes Albums de Livraison</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+            {% for album in livraison_albums %}
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <img class="w-full h-48 object-cover" src="{% if album.cover_image %}{{ album.cover_image.url }}{% else %}{% static 'img/alb.png' %}{% endif %}" alt="Album Cover">
+                    <div class="p-4">
+                        <h3 class="font-semibold">{{ album.title }}</h3>
+                        <a href="{% url 'livraison_album_detail' album.id %}" class="text-blue-600 hover:underline">Voir Détails</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Aucun album de livraison trouvé.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8"> 
+        <!-- Formulaire de Témoignage -->
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Soumettre un Témoignage</h2>
+            <form method="POST" action="{% url 'submit_testimonial' %}">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+                    <input type="text" name="name" id="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-indigo-200" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" name="email" id="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-indigo-200" required>
+                </div>
+                <div class="mb-4">
+                    <label for="content" class="block text-sm font-medium text-gray-700">Témoignage</label>
+                    <textarea name="content" id="content" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:outline-none focus:ring focus:ring-indigo-200" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 rounded-md hover:bg-indigo-500 transition duration-200">Envoyer</button>
+            </form>
+        </div>
+
+        <!-- Formulaire de Commande de Service -->
+        <div class="bg-white shadow-lg rounded-lg p-8">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Commande de Service</h2>
+            <p class="text-gray-600 text-center mb-6">
+                Veuillez remplir le formulaire ci-dessous pour commander un service. Nous vous contacterons dès que possible.
+            </p>
+
+            {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                        <div class="bg-green-100 text-green-800 p-2 rounded mb-2">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'service_order' %}" class="space-y-4">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="{{ form.nom.id_for_label }}" class="block text-gray-700">{{ form.nom.label }}</label>
+                        {{ form.nom }}
+                        {% if form.nom.errors %}
+                            <div class="text-red-600">{{ form.nom.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.postnom.id_for_label }}" class="block text-gray-700">{{ form.postnom.label }}</label>
+                        {{ form.postnom }}
+                        {% if form.postnom.errors %}
+                            <div class="text-red-600">{{ form.postnom.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="{{ form.email.id_for_label }}" class="block text-gray-700">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-red-600">{{ form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.telephone.id_for_label }}" class="block text-gray-700">{{ form.telephone.label }}</label>
+                        {{ form.telephone }}
+                        {% if form.telephone.errors %}
+                            <div class="text-red-600">{{ form.telephone.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="{{ form.date_commande.id_for_label }}" class="block text-gray-700">{{ form.date_commande.label }}</label>
+                        {{ form.date_commande }}
+                        {% if form.date_commande.errors %}
+                            <div class="text-red-600">{{ form.date_commande.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <label for="{{ form.nombre_heures.id_for_label }}" class="block text-gray-700">{{ form.nombre_heures.label }}</label>
+                        {{ form.nombre_heures }}
+                        {% if form.nombre_heures.errors %}
+                            <div class="text-red-600">{{ form.nombre_heures.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.service.id_for_label }}" class="block text-gray-700">{{ form.service.label }}</label>
+                    {{ form.service }}
+                    {% if form.service.errors %}
+                        <div class="text-red-600">{{ form.service.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.description.id_for_label }}" class="block text-gray-700">{{ form.description.label }}</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="text-red-600">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">Aller commander un service</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Toggle sections based on button clicks
+    const albumsButton = document.getElementById('albumsButton');
+    const orderHistoryButton = document.getElementById('orderHistoryButton');
+    const albumsSection = document.getElementById('albumsSection');
+    const orderHistorySection = document.getElementById('orderHistorySection');
+    const createAlbumButton = document.getElementById('createAlbumButton');
+    const createAlbumForm = document.getElementById('createAlbumForm');
+    const deliveryButton = document.getElementById('deliveryButton');
+    const deliveryAlbumsSection = document.getElementById('deliveryAlbumsSection');
+
+    deliveryButton.addEventListener('click', () => {
+        deliveryAlbumsSection.classList.toggle('hidden');
+        albumsSection.classList.add('hidden');
+        orderHistorySection.classList.add('hidden');
+    });
+
+    albumsButton.addEventListener('click', () => {
+        albumsSection.classList.toggle('hidden');
+        orderHistorySection.classList.add('hidden');
+    });
+
+    orderHistoryButton.addEventListener('click', () => {
+        orderHistorySection.classList.toggle('hidden');
+        albumsSection.classList.add('hidden');
+    });
+
+    createAlbumButton.addEventListener('click', () => {
+        createAlbumForm.classList.toggle('hidden');
+    });
+</script>
+{% endblock content %}
